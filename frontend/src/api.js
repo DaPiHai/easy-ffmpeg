@@ -37,6 +37,7 @@ export const api = {
   cancelJob: (id) => post(`api/jobs/${id}/cancel`),
   removeJob: (id) => del(`api/jobs/${id}`),
   streamUrl: (path) => `${BASE}api/files/stream?path=${encodeURIComponent(path)}`,
+  thumbUrl: (path) => `${BASE}api/files/thumbnail?path=${encodeURIComponent(path)}`,
   videoAccept: [
     ".mp4", ".m4v", ".mkv", ".webm", ".mov", ".avi", ".ts", ".flv", ".wmv", ".mpg", ".mpeg"
   ]

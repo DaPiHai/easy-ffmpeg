@@ -1,6 +1,7 @@
 <script setup>
 import { openPicker } from "../store";
 import { api } from "../api";
+import FileThumb from "./FileThumb.vue";
 
 const props = defineProps({
   modelValue: { type: [String, Array], default: "" },
@@ -28,9 +29,12 @@ async function pick() {
 <template>
   <div class="fsb">
     <el-button type="primary" plain @click="pick">{{ label }}</el-button>
-    <span v-if="modelValue" class="fsb-name">
-      <template v-if="Array.isArray(modelValue)">已选 {{ modelValue.length }} 个文件</template>
-      <template v-else>{{ basename(modelValue) }}</template>
+    <div v-if="modelValue && !Array.isArray(modelValue)" class="fsb-file">
+      <FileThumb :path="modelValue" :height="56" />
+      <span class="fsb-name" :title="modelValue">{{ basename(modelValue) }}</span>
+    </div>
+    <span v-else-if="Array.isArray(modelValue)" class="fsb-name">
+      已选 {{ modelValue.length }} 个文件
     </span>
   </div>
 </template>
@@ -40,8 +44,22 @@ async function pick() {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.fsb-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 8px 4px 4px;
+  border: 1px solid var(--el-border-color-lighter);
+  border-radius: 6px;
 }
 .fsb-name {
+  flex: 1;
+  min-width: 0;
   font-size: 13px;
   color: #555;
   overflow: hidden;

@@ -4,6 +4,7 @@ import { ElMessage } from "element-plus";
 import { api } from "../api";
 import { fmtTime, fmtSize } from "../utils";
 import FileSelectButton from "../components/FileSelectButton.vue";
+import FileThumb from "../components/FileThumb.vue";
 
 const file = ref("");
 const info = ref(null);
@@ -31,6 +32,9 @@ async function onFileChange(path) {
     <FileSelectButton v-model="file" :accept="api.videoAccept" @update:model-value="onFileChange" />
 
     <div v-if="info" v-loading="loading" style="margin-top: 16px">
+      <div class="mi-preview">
+        <FileThumb :path="file" :height="135" />
+      </div>
       <el-descriptions title="容器信息" :column="2" border size="small">
         <el-descriptions-item label="文件名">{{ info.name }}</el-descriptions-item>
         <el-descriptions-item label="封装格式">{{ info.container }}</el-descriptions-item>
@@ -86,5 +90,8 @@ async function onFileChange(path) {
   font-family: monospace;
   font-size: 12px;
   word-break: break-all;
+}
+.mi-preview {
+  margin-bottom: 14px;
 }
 </style>

@@ -118,7 +118,10 @@ export function connectJobsWs() {
  */
 export function openPicker(opts) {
   return new Promise((resolve) => {
-    store.picker = { mode: "file", multiple: false, accept: null, root: "", ...opts, resolve };
+    const merged = { mode: "file", multiple: false, accept: null, root: "", ...opts, resolve };
+    // mode "files" 本身即多选语义（历史上只改 mode 没传 multiple，导致点条目只能单选）
+    if (merged.mode === "files") merged.multiple = true;
+    store.picker = merged;
   });
 }
 

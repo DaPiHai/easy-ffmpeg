@@ -11,6 +11,7 @@ const {
   normalizePath
 } = require("./auth-files");
 const { ffprobeJson, summarizeProbe } = require("./ffmpeg");
+const { videoThumbnail } = require("./thumbs");
 const { callTrimApi } = require("./trim-api");
 const { IS_DEV, VERSION, APP_NAME, GATEWAY_PREFIX, MAX_CONCURRENCY } = require("./paths");
 
@@ -29,7 +30,13 @@ const CONTENT_TYPES = {
   ".flac": "audio/flac",
   ".wav": "audio/wav",
   ".aac": "audio/aac",
-  ".ogg": "audio/ogg"
+  ".ogg": "audio/ogg",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+  ".bmp": "image/bmp"
 };
 
 const VIDEO_EXTS = new Set([
@@ -241,6 +248,33 @@ function createRouter(queue) {
       res.writeHead(200, { ...baseHeaders, "Content-Length": total });
       stream = fs.createReadStream(p);
     }
+    req.on("close", () => stream.destroy());
+    stream.pipe(res);
+  }));
+
+  // 预览缩略图：视频抽帧返回缓存 JPEG，图片直接返回原文件（仅授权目录内）
+  router.get("/api/files/thumbnail", h(async (req, res) => {
+    const uid = uidFromReq(req);
+    const rawPath = String(req.query.path || "");
+    const ext = path.extname(rawPath).toLowerCase();
+    const p = (await assertInAccessibleRoots(uid, rawPath)).path;
+    const st = await statExists(p, false);
+    await assertFsAccess(p, fs.constants.R_OK);
+
+    let file;
+    if (CONTENT_TYPES[ext] && CONTENT_TYPES[ext].startsWith("image/")) {
+      file = p;
+    } else if (VIDEO_EXTS.has(ext)) {
+      file = await videoThumbnail(p, st);
+    } else {
+      throw Object.assign(new Error("该文件类型不支持生成缩略图"), { status: 404 });
+    }
+
+    res.writeHead(200, {
+      "Content-Type": "image/jpeg",
+      "Cache-Control": "no-store"
+    });
+    const stream = fs.createReadStream(file);
     req.on("close", () => stream.destroy());
     stream.pipe(res);
   }));

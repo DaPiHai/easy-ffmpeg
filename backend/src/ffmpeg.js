@@ -129,6 +129,40 @@ function runFfmpeg(args, { totalDuration = 0, onProgress = () => {}, signal } = 
 }
 
 /**
+ * 抽一帧视频存为图片（用于缩略图，无需 -progress）。
+ * seekSec 超出视频时长时 ffmpeg 会输出 0 帧，调用方需检测输出文件是否生成并降级重试。
+ */
+function grabFrame(file, outPath, { seekSec = 0, timeoutMs = 20000 } = {}) {
+  return new Promise((resolve, reject) => {
+    const args = ["-hide_banner", "-nostdin", "-y", "-loglevel", "error"];
+    if (seekSec > 0) args.push("-ss", String(seekSec));
+    args.push("-i", file, "-frames:v", "1", "-vf", "scale=-2:180", "-q:v", "5", outPath);
+
+    const p = spawn(FFMPEG_PATH, args);
+    let errTail = "";
+    const timer = setTimeout(() => {
+      try {
+        p.kill("SIGKILL");
+      } catch {}
+      reject(new Error("ffmpeg 抽帧超时"));
+    }, timeoutMs);
+
+    p.stderr.on("data", (c) => {
+      errTail = (errTail + c.toString("utf8")).slice(-2000);
+    });
+    p.on("error", (e) => {
+      clearTimeout(timer);
+      reject(new Error(`ffmpeg 启动失败: ${e.message}`));
+    });
+    p.on("close", (code) => {
+      clearTimeout(timer);
+      if (code === 0) return resolve();
+      reject(new Error(`ffmpeg 抽帧失败(code=${code}): ${errTail.trim()}`));
+    });
+  });
+}
+
+/**
  * 提取媒体概要：真实的视频流（排除封面 attached_pic）、首个音频流、时长、容器。
  */
 function summarizeProbe(info) {
@@ -149,4 +183,4 @@ function summarizeProbe(info) {
   };
 }
 
-module.exports = { ffprobeJson, runFfmpeg, summarizeProbe };
+module.exports = { ffprobeJson, runFfmpeg, grabFrame, summarizeProbe };

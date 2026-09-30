@@ -7,6 +7,7 @@ import { media } from "../media";
 import { openPicker } from "../store";
 import { fmtSize } from "../utils";
 import DirSelect from "../components/DirSelect.vue";
+import FileThumb from "../components/FileThumb.vue";
 
 const files = ref([]); // [{ path, name, size? }]
 const mode = ref("auto");
@@ -78,6 +79,7 @@ async function submit() {
           />
           <div v-for="(f, i) in files" :key="f.path" class="file-row">
             <span class="order">{{ i + 1 }}</span>
+            <FileThumb :path="f.path" :height="48" />
             <span class="name" :title="f.path">{{ f.name }}</span>
             <span class="ops">
               <el-button size="small" text :icon="Top" :disabled="i === 0" @click="move(i, -1)" />
@@ -141,6 +143,8 @@ async function submit() {
   color: #999;
   font-size: 12px;
   width: 18px;
+  flex: none;
+  text-align: center;
 }
 .name {
   flex: 1;
