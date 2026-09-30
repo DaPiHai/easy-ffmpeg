@@ -1,0 +1,17 @@
+{
+  "name": "easy-ffmpeg",
+  "version": "0.1.7",
+  "private": true,
+  "description": "Easy FFmpeg - 飞牛 fnOS 视频工具（合并/剪辑/转码/提取音频）",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:frontend": "npm --workspace frontend run dev",
+    "icons": "node scripts/make-icons.js",
+    "build:frontend": "npm --workspace frontend run build",
+    "build": "node scripts/build-combined.js"
+  }
+}

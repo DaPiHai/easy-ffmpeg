@@ -1,0 +1,358 @@
+/**
+ * Spotify 设计语言主题（依据 awesome-design-md/design-md/spotify/DESIGN.md）
+ * - 近黑表面层级：页面 #121212 / 卡片 #181818 / 交互面 #1f1f1f / 浮层 #252525
+ * - 品牌绿 #1ed760 作为唯一强调色（按钮黑字、进度、激活态）
+ * - 胶囊按钮（radius 500px）、无重边框、hover 微亮
+ * - 语义色：红 #f3727f / 橙 #ffa42b / 蓝 #539df5
+ * 覆盖 Element Plus CSS 变量，需在 element-plus css 与 dark css-vars 之后加载。
+ */
+
+/* ---------- 亮色模式：品牌绿 + 黑字按钮 ---------- */
+:root {
+  --el-color-primary: #1ed760;  --el-color-primary-light-3: #45e37f;
+  --el-color-primary-light-5: #6feb97;
+  --el-color-primary-light-7: #9af2b6;
+  --el-color-primary-light-8: #bdf6cd;
+  --el-color-primary-light-9: #e8faf0;
+  --el-color-primary-dark-2: #17b150;
+  --el-color-success: #17b150;
+  --el-color-danger: #e05363;
+  --el-color-warning: #d9821b;
+  --el-color-info: #3379d6;
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+  --el-border-radius-round: 999px;
+  --el-font-family: "Inter", "CircularSp", "Circular Std", -apple-system, "SF Pro Text",
+    "Helvetica Neue", helvetica, arial, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+
+  /* 应用骨架（侧栏/移动端顶栏底栏），随主题切换 */
+  --app-bar-bg: #ffffff;
+  --app-bar-border: #ececec;
+  --app-bar-text: #6a6a6a;
+  --app-bar-text-active: #000000;
+  --app-bar-active-bg: #ececec;
+}
+
+html.dark {
+  --app-bar-bg: #000000;
+  --app-bar-border: #1f1f1f;
+  --app-bar-text: #b3b3b3;
+  --app-bar-text-active: #ffffff;
+  --app-bar-active-bg: #1f1f1f;
+}
+
+/* ---------- 移动端（飞牛 App 内嵌 / 窄窗口） ---------- */
+@media (max-width: 768px) {
+  .el-radio-group {
+    flex-wrap: wrap;
+  }
+  .el-card__body {
+    padding: 14px;
+  }
+  .el-dialog {
+    width: 94vw !important;
+  }
+}
+html:not(.dark) .el-button {
+  border-radius: 999px;
+  font-weight: 600;
+}
+html:not(.dark) .el-button--primary {
+  background: #1ed760;
+  border-color: #1ed760;
+  color: #000;
+  font-weight: 700;
+}
+html:not(.dark) .el-button--primary:hover,
+html:not(.dark) .el-button--primary:focus {
+  background: #45e37f;
+  border-color: #45e37f;
+  color: #000;
+}
+html:not(.dark) .el-button--primary:active {
+  background: #17b150;
+  border-color: #17b150;
+  color: #000;
+}
+html:not(.dark) .el-card {
+  border-radius: 12px;
+}
+html:not(.dark) .el-table th.el-table__cell {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+html.dark {
+  /* 品牌 & 语义色 */
+  --el-color-primary: #1ed760;
+  --el-color-primary-light-3: #45e37f;
+  --el-color-primary-light-5: #6feb97;
+  --el-color-primary-light-7: #9af2b6;
+  --el-color-primary-light-8: #bdf6cd;
+  --el-color-primary-light-9: #1f2b23;
+  --el-color-primary-dark-2: #17b150;
+  --el-color-success: #1ed760;
+  --el-color-danger: #f3727f;
+  --el-color-warning: #ffa42b;
+  --el-color-info: #539df5;
+
+  /* 表面层级 */
+  --el-bg-color: #121212;
+  --el-bg-color-page: #121212;
+  --el-bg-color-overlay: #1f1f1f;
+  --el-fill-color: #1f1f1f;
+  --el-fill-color-light: #1f1f1f;
+  --el-fill-color-lighter: #1a1a1a;
+  --el-fill-color-extra-light: #252525;
+  --el-fill-color-blank: #121212;
+
+  /* 文本 */
+  --el-text-color-primary: #ffffff;
+  --el-text-color-regular: #cbcbcb;
+  --el-text-color-secondary: #b3b3b3;
+  --el-text-color-placeholder: #6a6a6a;
+  --el-text-color-disabled: #5a5a5a;
+
+  /* 边框：尽量隐形 */
+  --el-border-color: #2e2e2e;
+  --el-border-color-light: #292929;
+  --el-border-color-lighter: #252525;
+  --el-border-color-extra-light: #222222;
+
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+  --el-border-radius-round: 999px;
+
+  --el-font-family: "Inter", "CircularSp", "Circular Std", -apple-system, "SF Pro Text",
+    "Helvetica Neue", helvetica, arial, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+
+  --el-box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  --el-box-shadow-light: 0 4px 8px rgba(0, 0, 0, 0.25);
+  --el-mask-color: rgba(0, 0, 0, 0.65);
+}
+
+/* ---------- 按钮：胶囊 + Spotify 语气 ---------- */
+html.dark .el-button {
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+html.dark .el-button--primary {
+  background: #1ed760;
+  border-color: #1ed760;
+  color: #000;
+  font-weight: 700;
+}
+html.dark .el-button--primary:hover,
+html.dark .el-button--primary:focus {
+  background: #3be477;
+  border-color: #3be477;
+  color: #000;
+}
+html.dark .el-button--primary:active {
+  background: #17b150;
+  border-color: #17b150;
+  color: #000;
+}
+html.dark .el-button--primary.is-plain,
+html.dark .el-button--primary.is-text,
+html.dark .el-button--primary.is-link {
+  background: transparent;
+  color: #1ed760;
+}
+html.dark .el-button--primary.is-plain:hover {
+  background: rgba(30, 215, 96, 0.1);
+  color: #3be477;
+}
+html.dark .el-button:not(.el-button--primary):not(.is-text):not(.is-link) {
+  background: #1f1f1f;
+  border-color: transparent;
+  color: #ffffff;
+}
+html.dark .el-button:not(.el-button--primary):not(.is-text):not(.is-link):hover,
+html.dark .el-button:not(.el-button--primary):not(.is-text):not(.is-link):focus {
+  background: #2a2a2a;
+  border-color: transparent;
+  color: #ffffff;
+}
+html.dark .el-button--danger:not(.is-text):not(.is-plain):not(.is-link) {
+  background: #f3727f;
+  border-color: #f3727f;
+  color: #000;
+}
+html.dark .el-button.is-disabled {
+  background: #1a1a1a;
+  color: #5a5a5a;
+}
+
+/* ---------- 卡片：无重边框，hover 微亮 ---------- */
+html.dark .el-card {
+  background: #181818;
+  border: none;
+  border-radius: 12px;
+  box-shadow: none;
+  color: #ffffff;
+}
+html.dark .el-card__header {
+  border-bottom: 1px solid #242424;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 700;
+}
+html.dark .el-card__body {
+  padding: 20px;
+}
+
+/* ---------- 表格：透明底、小写间距表头 ---------- */
+html.dark .el-table {
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: transparent;
+  --el-table-header-text-color: #b3b3b3;
+  --el-table-text-color: #cbcbcb;
+  --el-table-border-color: #242424;
+  --el-table-row-hover-bg-color: #1f1f1f;
+}
+html.dark .el-table th.el-table__cell {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+/* ---------- 输入类：深色交互面 ---------- */
+html.dark .el-input__wrapper,
+html.dark .el-textarea__inner,
+html.dark .el-select__wrapper {
+  background: #1f1f1f;
+  box-shadow: 0 0 0 1px #2e2e2e inset;
+  border-radius: 8px;
+}
+html.dark .el-input__wrapper:hover,
+html.dark .el-select__wrapper:hover,
+html.dark .el-textarea__inner:hover {
+  box-shadow: 0 0 0 1px #4d4d4d inset;
+}
+html.dark .el-input__wrapper.is-focus,
+html.dark .el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 2px #ffffff inset;
+}
+html.dark .el-input__inner,
+html.dark .el-select__placeholder {
+  color: #ffffff;
+}
+
+/* ---------- 浮层：弹层统一 #1f1f1f ---------- */
+html.dark .el-dialog,
+html.dark .el-drawer,
+html.dark .el-popper,
+html.dark .el-select-dropdown,
+html.dark .el-message-box {
+  background: #1f1f1f;
+}
+html.dark .el-dialog {
+  border-radius: 12px;
+}
+html.dark .el-drawer {
+  --el-drawer-bg-color: #181818;
+}
+html.dark .el-select-dropdown__item.is-hovering,
+html.dark .el-select-dropdown__item:hover {
+  background: #2a2a2a;
+}
+html.dark .el-select-dropdown__item.is-selected {
+  color: #1ed760;
+}
+
+/* ---------- 标签：胶囊形 ---------- */
+html.dark .el-tag {
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+}
+html.dark .el-tag--info {
+  background: #2a2a2a;
+  color: #b3b3b3;
+}
+html.dark .el-tag:not(.el-tag--info) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbcbcb;
+}
+html.dark .el-tag.el-tag--success {
+  background: rgba(30, 215, 96, 0.15);
+  color: #1ed760;
+}
+html.dark .el-tag.el-tag--danger {
+  background: rgba(243, 114, 127, 0.15);
+  color: #f3727f;
+}
+html.dark .el-tag.el-tag--warning {
+  background: rgba(255, 164, 43, 0.15);
+  color: #ffa42b;
+}
+html.dark .el-tag.el-tag--primary {
+  background: rgba(30, 215, 96, 0.15);
+  color: #1ed760;
+}
+
+/* ---------- 进度条 ---------- */
+html.dark .el-progress-bar__outer {
+  background: #2a2a2a;
+}
+
+/* ---------- 空状态 / 描述列表 / 消息 ---------- */
+html.dark .el-empty__description p {
+  color: #b3b3b3;
+}
+html.dark .el-descriptions {
+  --el-descriptions-item-bordered-label-background: #1a1a1a;
+}
+html.dark .el-descriptions__body {
+  background: transparent;
+}
+html.dark .el-message {
+  background: #2a2a2a;
+  border: none;
+}
+html.dark .el-alert--error {
+  background: rgba(243, 114, 127, 0.12);
+}
+html.dark .el-alert--warning {
+  background: rgba(255, 164, 43, 0.12);
+}
+html.dark .el-alert--info {
+  background: rgba(83, 157, 245, 0.12);
+}
+html.dark .el-alert--success {
+  background: rgba(30, 215, 96, 0.12);
+}
+
+/* ---------- 滚动条 ---------- */
+html.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4d4d4d;
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 大标题：Spotify 式粗体标题 */
+html.dark .el-card__header,
+html.dark h4 {
+  letter-spacing: -0.2px;
+}

@@ -1,0 +1,17 @@
+appname=easyffmpeg
+version=0.1.7
+display_name=Easy FFmpeg
+desc=基于 FFmpeg 的视频工具箱：多段视频合并（自动无损/重编码，不同尺寸自动模糊背景填充）、格式转换与压缩（MP4/MKV/WebM、H.264/H.265）、音频提取与媒体信息查看。支持任务队列与实时进度推送，通过统一网关接入飞牛桌面，支持用户目录授权与管理员共享目录授权。
+maintainer=hhdlj
+maintainer_url=https://github.com/hhdlj
+distributor=hhdlj
+source=thirdparty
+platform=x86
+os_min_version=1.2.0401
+ctl_stop=true
+install_dep_apps=nodejs_v22
+desktop_uidir=ui
+desktop_applaunchname=easyffmpeg.main
+micro_app=true
+changelog=0.1.7：清理包内冗余文件。0.1.6：全新应用图标（FF 快进 x 模糊残影，透明通道）。0.1.5：适配移动端飞牛 App（窄屏顶栏+底部标签栏布局、表单自适应、安全区适配）。0.1.4：亮/暗/跟随系统主题切换（跟随飞牛宿主主题，标题栏同步适配）；页面高度随窗口自适应；侧栏按钮统一。0.1.3：界面重构为 Spotify 暗色设计语言；移除视频剪辑功能。0.1.2：小窗口适配；合并不同尺寸视频改为模糊背景填充。
+checksum=auto

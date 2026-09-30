@@ -1,0 +1,15 @@
+node_modules/
+dist/
+vendor/
+devdata/
+*.fpk
+*.log
+
+# 打包目录中的构建产物（由 scripts/build-combined.js 生成）
+easy-ffmpeg/app/server/
+easy-ffmpeg/app/ffmpeg/
+easy-ffmpeg/app/ui/images/
+easy-ffmpeg/ICON.PNG
+easy-ffmpeg/ICON_256.PNG
+easy-ffmpeg/app/devdata/
+.zcode/

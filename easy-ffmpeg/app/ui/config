@@ -1,0 +1,14 @@
+{
+  ".url": {
+    "easyffmpeg.main": {
+      "title": "Easy FFmpeg",
+      "icon": "images/icon_{0}.png",
+      "type": "iframe",
+      "protocol": "",
+      "gatewayPrefix": "/app/easyffmpeg",
+      "gatewaySocket": "app.sock",
+      "url": "/app/easyffmpeg",
+      "allUsers": true
+    }
+  }
+}

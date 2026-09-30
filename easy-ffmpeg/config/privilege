@@ -1,0 +1,7 @@
+{
+  "defaults": {
+    "run-as": "package"
+  },
+  "username": "easyffmpeg",
+  "groupname": "easyffmpeg"
+}

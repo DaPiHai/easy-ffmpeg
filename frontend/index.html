@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#121212" />
+    <script>
+      // 启动前按本地偏好应用主题，避免闪烁（宿主主题就绪后由 store 校正）
+      try {
+        var __t = localStorage.getItem("easyffmpeg:theme");
+        var __dark =
+          __t === "dark" ||
+          ((!__t || __t === "auto") && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", __dark);
+        document.documentElement.style.background = __dark ? "#121212" : "#f2f3f5";
+      } catch (e) {}
+    </script>
+    <title>Easy FFmpeg</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
